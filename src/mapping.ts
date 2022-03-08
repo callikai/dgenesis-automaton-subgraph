@@ -3,11 +3,7 @@ import { ERC721, Transfer as TransferEvent } from '../generated/ERC721/ERC721';
 import { Token, Owner, Contract, Transfer } from '../generated/schema';
 
 export function handleTransfer(event: TransferEvent): void {
-  log.debug('Transfer detected. From: {} | To: {} | TokenID: {}', [
-    event.params.from.toHexString(),
-    event.params.to.toHexString(),
-    event.params.tokenId.toHexString(),
-  ]);
+
 
   let previousOwner = Owner.load(event.params.from.toHexString());
   let newOwner = Owner.load(event.params.to.toHexString());
@@ -58,6 +54,7 @@ export function handleTransfer(event: TransferEvent): void {
     transfer.timestamp = event.block.timestamp;
     transfer.block = event.block.number;
     transfer.transactionHash = event.transaction.hash.toHexString();
+    transfer.ethValue = event.transaction.value;
   }
 
   if (contract == null) {

@@ -6,7 +6,6 @@ import {
   Value,
   ValueKind,
   store,
-  Address,
   Bytes,
   BigInt,
   BigDecimal
@@ -266,6 +265,7 @@ export class Transfer extends Entity {
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("block", Value.fromBigInt(BigInt.zero()));
     this.set("transactionHash", Value.fromString(""));
+    this.set("ethValue", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -362,5 +362,14 @@ export class Transfer extends Entity {
 
   set transactionHash(value: string) {
     this.set("transactionHash", Value.fromString(value));
+  }
+
+  get ethValue(): BigInt {
+    let value = this.get("ethValue");
+    return value!.toBigInt();
+  }
+
+  set ethValue(value: BigInt) {
+    this.set("ethValue", Value.fromBigInt(value));
   }
 }
